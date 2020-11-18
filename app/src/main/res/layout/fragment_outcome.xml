@@ -62,12 +62,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/grey_f3f3f3"
+        android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:keyTextColor="@color/black"
+        android:keyTextColor="@color/white"
         android:paddingTop="1dp"
-        android:shadowColor="@color/white"
+        android:shadowColor="@color/grey_7D7D7D"
         android:shadowRadius="0.0" />
 
     <RelativeLayout
