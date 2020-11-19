@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.tally.adapter.RecordPagerAdapter;
 import com.example.tally.frag_record.IncomeFragment;
+import com.example.tally.frag_record.BaseRecordFragment;
 import com.example.tally.frag_record.OutcomeFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -18,7 +19,6 @@ import java.util.List;
 public class RecordActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

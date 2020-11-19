@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_f3f3f3"
-    tools:context=".frag_record.OutcomeFragment">
+    tools:context=".frag_record.BaseRecordFragment">
 
     <RelativeLayout
         android:id="@+id/frag_record_r1_top"
