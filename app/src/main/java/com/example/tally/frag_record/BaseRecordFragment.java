@@ -22,6 +22,7 @@ import com.example.tally.db.AccountBean;
 import com.example.tally.db.TypeBean;
 import com.example.tally.utils.BeiZhuDialog;
 import com.example.tally.utils.KeyBoardUtils;
+import com.example.tally.utils.SelectTimeDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -152,13 +153,30 @@ public abstract class BaseRecordFragment extends Fragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frag_record_tv_beizhu:
-
                 showBZDialog();
                 break;
             case R.id.frag_record_tv_time:
+                showTimeDialog();
                 break;
         }
     }
+
+    protected void showTimeDialog() {
+        SelectTimeDialog dialog = new SelectTimeDialog(getContext());
+        dialog.show();
+        //设定确定按钮被点击的监听器
+        dialog.setOnEnsureListener(new SelectTimeDialog.OnEnsureListener() {
+            @Override
+            public void onEnsure(String time, int year, int month, int day) {
+                timeTv.setText(time);
+                accountBean.setTime(time);
+                accountBean.setYear(year);
+                accountBean.setMonth(month);
+                accountBean.setDay(day);
+            }
+        });
+    }
+
 
     //弹出备注对话框
     public void showBZDialog() {

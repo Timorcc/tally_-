@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +59,7 @@ public class DBManager {
     * */
 
     public static void insertItemToAccounttb(AccountBean bean) {
-
         ContentValues values = new ContentValues();
-
         values.put("typeName", bean.getTypeName());
         values.put("sImageId", bean.getsImageId());
         values.put("beizhu", bean.getBeizhu());
@@ -72,6 +71,31 @@ public class DBManager {
         values.put("kind", bean.getKind());
 
         db.insert("accounttb", null, values);
+        Log.i("this", "insert item to account OK___________________");
     }
+
+    //获取记账表中某一天的所有收入支出
+    public static List<AccountBean> getAccountListOneDayFormAccounttb(int year, int month, int day) {
+        List<AccountBean> list = new ArrayList<>();
+        String sql = "select * from accounttb where year = ? and month = ? and day = ? order by id desc";
+        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + "", day + ""});
+        //遍历符合要求的数据
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            String typename = cursor.getString(cursor.getColumnIndex("typename"));
+            String beizhu = cursor.getString(cursor.getColumnIndex("beizhu"));
+            String  time = cursor.getString(cursor.getColumnIndex("time"));
+            int sImageId = cursor.getInt(cursor.getColumnIndex("sImageId"));
+            int kind = cursor.getInt(cursor.getColumnIndex("kind"));
+            float money = cursor.getInt(cursor.getColumnIndex("money"));
+            /*     cursor.getInt(cursor.getColumnIndex("year"));
+            cursor.getInt(cursor.getColumnIndex("month"));
+            cursor.getInt(cursor.getColumnIndex("day"));*/
+            AccountBean accountBean = new AccountBean(id, typename, sImageId, beizhu, money, time, year, month, day, kind);
+            list.add(accountBean);
+        }
+        return list;
+    }
+
 
 }
