@@ -2,7 +2,9 @@ package com.example.tally;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.example.tally.adapter.AccountAdapter;
 import com.example.tally.db.AccountBean;
 import com.example.tally.db.DBManager;
+import com.example.tally.utils.BudgetDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     View headerView;
     TextView topOutTv, topInTv, topbudgetTv, topConTv;
     ImageView topShowIv;
-
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initTime();
         initView();
+        preferences = getSharedPreferences("budget", Context.MODE_PRIVATE);
+
         //添加ListView头布局
+
         AddLVHeaderView();
 
         mDates = new ArrayList<>();
@@ -114,6 +120,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         topOutTv.setText("￥ " + outcomeOneMonth);
         topInTv.setText("￥ " + incomeOneMonth);
         //设置显示剩余预算
+        float bmoney = preferences.getFloat("bmoney", 0);//预算
+        if (bmoney==0) {
+            topbudgetTv.setText("￥ 0");
+        }else {
+            float syMoney = bmoney - outcomeOneMonth;
+            topbudgetTv.setText("￥"+syMoney);
+        }
 
     }
 
@@ -138,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_btn_more:
                 break;
             case R.id.item_mainlv_top_tv_budget:
+                showBudgetDialog();
                 break;
 
             case R.id.item_mainlv_iv_hide:
@@ -148,6 +162,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == headerView) {
             //头布局被点击了
         }
+    }
+
+    //显示运算设置对话框
+    private void showBudgetDialog() {
+        BudgetDialog dialog = new BudgetDialog(this);
+        dialog.show();
+        dialog.setDialogSize();
+        dialog.setOnEnsureListener(new BudgetDialog.OnEnsureListener() {
+            @Override
+            public void onEnsure(float money) {
+                //预算金额写入到共享参数中，进行存储
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putFloat("bmoney", money);
+                editor.commit();
+
+                //计算剩余金额
+                float outcomeOneMonth = DBManager.getSumMoneyOneMonth(year, month, 0);
+                float syMoney = money - outcomeOneMonth;//预算剩余 = 预算 - 支出
+                topbudgetTv.setText("￥" + syMoney);
+            }
+        });
+
     }
 
     //点击头部眼睛时，明文加密，密文显示
