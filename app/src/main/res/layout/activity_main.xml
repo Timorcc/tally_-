@@ -28,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:onClick="onClick"
             android:padding="10dp"
             android:src="@mipmap/search" />
     </RelativeLayout>
@@ -51,7 +50,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
-        android:onClick="onClick"
         android:background="@drawable/main_morebtn_bg"
         android:src="@mipmap/more" />
 
@@ -64,7 +62,6 @@
         android:background="@drawable/main_recordbtn_bg"
         android:drawableStart="@mipmap/edit"
         android:gravity="center_vertical"
-        android:onClick="onClick"
         android:text="@string/edit_one"
         android:textColor="@color/white"
         android:textStyle="bold" />
