@@ -17,9 +17,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //创建表示类型的表
-        String sql = "create table typetb(id integer primary key autoincrement ,typename varchar(10),imageId integer,sImageId integer,kind integer)";
+        String sql = "create table typetb(id integer primary key autoincrement,typename varchar(10),imageId integer,sImageId integer,kind integer)";
         db.execSQL(sql);
         insertType(db);
+
+        //创建记账表
+        String sql1 = "create table accounttb(id integer primary key autoincrement,typename varchar(10),sImageId integer,beizhu varchar(80),money float,time varchar(60),year integer,month integer,day integer,kind integer)";
+        db.execSQL(sql1);
 
     }
 

@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.example.tally.R;
 import com.example.tally.db.AccountBean;
-import com.example.tally.db.DBManager;
 import com.example.tally.db.TypeBean;
+import com.example.tally.utils.BeiZhuDialog;
 import com.example.tally.utils.KeyBoardUtils;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * 记录页面当中的支出模块
  */
-public abstract class BaseRecordFragment extends Fragment {
+public abstract class BaseRecordFragment extends Fragment implements View.OnClickListener {
 
     KeyboardView keyboardView;
     EditText moneyEt;
@@ -120,6 +120,8 @@ public abstract class BaseRecordFragment extends Fragment {
         typeTv = view.findViewById(R.id.frag_record_tv_type);
         beizhuTv = view.findViewById(R.id.frag_record_tv_beizhu);
         timeTv = view.findViewById(R.id.frag_record_tv_time);
+        beizhuTv.setOnClickListener(this);
+        timeTv.setOnClickListener(this);
         //显示自定义键盘
         KeyBoardUtils keyBoardUtils = new KeyBoardUtils(keyboardView, moneyEt);
         keyBoardUtils.showKeyboard();
@@ -143,7 +145,36 @@ public abstract class BaseRecordFragment extends Fragment {
         });
     }
 
-    /*让子类一定要重写这个方法*/
+    /*让子类一定要重写这个方法，没设置类型和备注*/
     public abstract void saveAccountToDB();
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.frag_record_tv_beizhu:
+
+                showBZDialog();
+                break;
+            case R.id.frag_record_tv_time:
+                break;
+        }
+    }
+
+    //弹出备注对话框
+    public void showBZDialog() {
+        final BeiZhuDialog dialog = new BeiZhuDialog(getContext());
+        dialog.show();
+        dialog.setDialogSize();
+        dialog.setOnEnsureListener(new BeiZhuDialog.OnEnsureListener() {
+            @Override
+            public void onEnsure() {
+                String msg = dialog.getEditText();
+                if (!TextUtils.isEmpty(msg)) {
+                    beizhuTv.setText(msg);
+                    accountBean.setBeizhu(msg);
+                }
+                dialog.cancel();
+            }
+        });
+    }
 }

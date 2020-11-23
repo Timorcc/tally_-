@@ -1,5 +1,6 @@
 package com.example.tally.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -42,4 +43,35 @@ public class DBManager {
         }
         return list;
     }
+
+    /*
+    向记账表中插入一条元素
+    String typeName;//类型
+    int sImageId;//被选中类型图片
+    String beizhu;//备注
+    float money;//价格
+    String time;//保存时间的字符串
+    int year;
+    int month;
+    int day;
+    int kind; //类型 收入 -1 支出 -0
+    * */
+
+    public static void insertItemToAccounttb(AccountBean bean) {
+
+        ContentValues values = new ContentValues();
+
+        values.put("typeName", bean.getTypeName());
+        values.put("sImageId", bean.getsImageId());
+        values.put("beizhu", bean.getBeizhu());
+        values.put("money", bean.getMoney());
+        values.put("time", bean.getTime());
+        values.put("year", bean.getYear());
+        values.put("month", bean.getMonth());
+        values.put("day", bean.getDay());
+        values.put("kind", bean.getKind());
+
+        db.insert("accounttb", null, values);
+    }
+
 }
