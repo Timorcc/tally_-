@@ -2,6 +2,7 @@ package com.example.tally.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.tally.AboutActivity;
 import com.example.tally.R;
+import com.example.tally.SearchActivity;
 
 public class MoreDialog extends Dialog implements View.OnClickListener {
 
@@ -48,8 +51,11 @@ public class MoreDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.dialog_more_btn_about:
+                intent.setClass(getContext(), AboutActivity.class);
+                getContext().startActivity(intent);
                 break;
             case R.id.dialog_more_btn_setting:
                 break;
@@ -62,7 +68,6 @@ public class MoreDialog extends Dialog implements View.OnClickListener {
         }
         cancel();
     }
-
 
 
     //设置dialog的尺寸和屏幕尺寸一致

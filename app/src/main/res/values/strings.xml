@@ -18,5 +18,14 @@
     <string name="history_record">账单记录</string>
     <string name="account_info">账单详情</string>
 
+    <string name="about_appinfo">应用信息</string>
+    <string name="about_version">版本</string>
+    <string name="about_1">1.0</string>
+    <string name="about_app">关于应用</string>
+    <string name="about_this">记账</string>
+    <string name="about_developer">开发者</string>
+    <string name="about_loc">teacherLiu</string>
+
+
 
 </resources>
