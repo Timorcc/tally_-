@@ -61,7 +61,7 @@ public class AccountAdapter extends BaseAdapter {
         holer.typeTv.setText(bean.getTypeName());
         holer.beizhuTv.setText(bean.getBeizhu());
         holer.timeTv.setText(bean.getTime());
-        holer.moneyTv.setText("￥"+bean.getMoney());
+        holer.moneyTv.setText("￥" + bean.getMoney());
 
         if (bean.getYear() == year && bean.getMoney() == month && bean.getDay() == day) {
             String time = bean.getTime().split(" ")[1];

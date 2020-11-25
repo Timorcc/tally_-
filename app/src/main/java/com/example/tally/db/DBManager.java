@@ -138,5 +138,11 @@ public class DBManager {
         return total;
     }
 
+    //根据传入的id删除accounttb表中的一条数据
+    public static int deleteItemFromAccounttbById(int id) {
+        int i = db.delete("accounttb", "id=?", new String[]{id + ""});
+        return i;
+    }
+
 
 }
