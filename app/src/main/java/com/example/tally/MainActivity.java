@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         DBManager.deleteItemFromAccounttbById(click_id);
                         mDates.remove(clickBean);//实施刷新
                         adapter.notifyDataSetChanged();//提示适配器而更新数据
-                        setTopTvShow();//该表头布局显示的内容
+                        setTopTvShow();//刷新该表头布局显示的内容
                     }
                 });
         builder.create().show();//显示对话框
@@ -185,10 +185,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_iv_search:
+                Intent it1 = new Intent(this, SearchActivity.class);
+                startActivity(it1);
                 break;
             case R.id.main_btn_edit:
-                Intent it1 = new Intent(this, RecordActivity.class);
-                startActivity(it1);
+                Intent it2 = new Intent(this, RecordActivity.class);
+                startActivity(it2);
                 break;
             case R.id.main_btn_more:
                 break;

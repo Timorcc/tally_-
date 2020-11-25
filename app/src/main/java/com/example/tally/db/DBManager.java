@@ -145,4 +145,25 @@ public class DBManager {
     }
 
 
+    //根据备注搜索收入或支出的情况列表
+    public static List<AccountBean> getAccountListByRemarkFromAccounttb(String msg){
+        List<AccountBean> list = new ArrayList<>();
+        String sql = "select * from accounttb where beizhu like '%"+msg+"%'";
+        Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            String typename = cursor.getString(cursor.getColumnIndex("typename"));
+            String time = cursor.getString(cursor.getColumnIndex("time"));
+            int sImageId = cursor.getInt(cursor.getColumnIndex("sImageId"));
+            String beizhu = cursor.getString(cursor.getColumnIndex("beizhu"));
+            int kind = cursor.getInt(cursor.getColumnIndex("kind"));
+            float money = cursor.getInt(cursor.getColumnIndex("money"));
+            int year = cursor.getInt(cursor.getColumnIndex("year"));
+            int month = cursor.getInt(cursor.getColumnIndex("month"));
+            int day = cursor.getInt(cursor.getColumnIndex("day"));
+            AccountBean accountBean = new AccountBean(id, typename, sImageId, beizhu, money, time, year, month, day, kind);
+            list.add(accountBean);
+        }
+        return list;
+    }
 }
