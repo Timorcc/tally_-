@@ -92,12 +92,11 @@ public class BudgetDialog extends Dialog implements View.OnClickListener {
         WindowManager.LayoutParams wlp = window.getAttributes();
         //获取屏幕宽度
         Display d = window.getWindowManager().getDefaultDisplay();
-
         wlp.width = d.getWidth();
         wlp.gravity = Gravity.BOTTOM;
         window.setBackgroundDrawableResource(android.R.color.transparent);
         window.setAttributes(wlp);
-        handler.sendEmptyMessageDelayed(1, 100);
+        handler.sendEmptyMessageDelayed(1, 100);//软键盘
     }
 
     Handler handler = new Handler() {

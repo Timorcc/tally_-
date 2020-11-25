@@ -22,6 +22,7 @@ import com.example.tally.adapter.AccountAdapter;
 import com.example.tally.db.AccountBean;
 import com.example.tally.db.DBManager;
 import com.example.tally.utils.BudgetDialog;
+import com.example.tally.utils.MoreDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -193,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(it2);
                 break;
             case R.id.main_btn_more:
+                MoreDialog moreDialog = new MoreDialog(this);
+                moreDialog.show();
+                moreDialog.setDialogSize();//设置dialog的尺寸和屏幕尺寸一致
                 break;
             case R.id.item_mainlv_top_tv_budget:
                 showBudgetDialog();
