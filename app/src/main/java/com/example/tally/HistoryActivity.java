@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.tally.adapter.AccountAdapter;
 import com.example.tally.db.AccountBean;
+import com.example.tally.db.DBManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,18 +30,22 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         initView();
         initTime();
-        timeTv.setText(year + "年" + month + "月");
         loadDate();
     }
 
     //获取指定年份月份收支情况的列表
     private void loadDate() {
+        List<AccountBean> list = DBManager.getAccountListOneMonthFormAccounttb(year, month);
+        mDates.clear();
+        mDates.addAll(list);
+        adapter.notifyDataSetChanged();
     }
 
     private void initTime() {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
+        timeTv.setText(year + "年" + month + "月");
     }
 
     private void initView() {

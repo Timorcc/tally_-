@@ -97,6 +97,30 @@ public class DBManager {
         return list;
     }
 
+    //获取记账表中某一天的所有收入支出
+    public static List<AccountBean> getAccountListOneMonthFormAccounttb(int year, int month) {
+        List<AccountBean> list = new ArrayList<>();
+        String sql = "select * from accounttb where year = ? and month = ?  order by id desc";
+        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + ""});
+        //遍历符合要求的数据
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            String typename = cursor.getString(cursor.getColumnIndex("typename"));
+            String beizhu = cursor.getString(cursor.getColumnIndex("beizhu"));
+            String time = cursor.getString(cursor.getColumnIndex("time"));
+            int sImageId = cursor.getInt(cursor.getColumnIndex("sImageId"));
+            int kind = cursor.getInt(cursor.getColumnIndex("kind"));
+            float money = cursor.getInt(cursor.getColumnIndex("money"));
+            int day = cursor.getInt(cursor.getColumnIndex("day"));
+            /*     cursor.getInt(cursor.getColumnIndex("year"));
+            cursor.getInt(cursor.getColumnIndex("month"));
+            cursor.getInt(cursor.getColumnIndex("day"));*/
+            AccountBean accountBean = new AccountBean(id, typename, sImageId, beizhu, money, time, year, month, day, kind);
+            list.add(accountBean);
+        }
+        return list;
+    }
+
     //获取某一天的支出或者收入的总金额 kind  支出0 收入1
     public static float getSumMoneyOneDay(int year, int month, int day, int kind) {
         float total = 0.0f;
@@ -146,9 +170,9 @@ public class DBManager {
 
 
     //根据备注搜索收入或支出的情况列表
-    public static List<AccountBean> getAccountListByRemarkFromAccounttb(String msg){
+    public static List<AccountBean> getAccountListByRemarkFromAccounttb(String msg) {
         List<AccountBean> list = new ArrayList<>();
-        String sql = "select * from accounttb where beizhu like '%"+msg+"%'";
+        String sql = "select * from accounttb where beizhu like '%" + msg + "%'";
         Cursor cursor = db.rawQuery(sql, null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex("id"));

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 
 import com.example.tally.AboutActivity;
+import com.example.tally.HistoryActivity;
 import com.example.tally.R;
 import com.example.tally.SearchActivity;
 
@@ -60,6 +61,8 @@ public class MoreDialog extends Dialog implements View.OnClickListener {
             case R.id.dialog_more_btn_setting:
                 break;
             case R.id.dialog_more_btn_record:
+                intent.setClass(getContext(), HistoryActivity.class);
+                getContext().startActivity(intent);
                 break;
             case R.id.dialog_more_btn_info:
                 break;
