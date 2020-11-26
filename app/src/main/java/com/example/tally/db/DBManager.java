@@ -190,4 +190,16 @@ public class DBManager {
         }
         return list;
     }
+
+    //查询记账表中中有几个年份信息
+    public static List<Integer> getYearListFromAccounttb() {
+        List<Integer> list = new ArrayList<>();
+        String sql = "select distinct(year) from accounttb order by year asc";
+        Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            int year = cursor.getInt(cursor.getColumnIndex("year"));
+            list.add(year);
+        }
+        return list;
+    }
 }

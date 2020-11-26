@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.tally.adapter.AccountAdapter;
 import com.example.tally.db.AccountBean;
 import com.example.tally.db.DBManager;
+import com.example.tally.utils.CalendarDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +24,8 @@ public class HistoryActivity extends AppCompatActivity {
     List<AccountBean> mDates;
     AccountAdapter adapter;
     int year, month;
+    int dialogSelPos = -1;
+    int dialogSelMonth = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +33,11 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         initView();
         initTime();
-        loadDate();
+        loadDate(year, month);
     }
 
     //获取指定年份月份收支情况的列表
-    private void loadDate() {
+    private void loadDate(int year, int month) {
         List<AccountBean> list = DBManager.getAccountListOneMonthFormAccounttb(year, month);
         mDates.clear();
         mDates.addAll(list);
@@ -63,6 +66,16 @@ public class HistoryActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.history_rili:
+                CalendarDialog dialog = new CalendarDialog(this);
+                dialog.show();
+                dialog.setDialogSize();
+                dialog.setOnRefreshListener(new CalendarDialog.OnRefreshListener() {
+                    @Override
+                    public void onRefresh(int selPos, int year, int month) {
+                        timeTv.setText(year + "年" + month + "月");
+                        loadDate(year, month);
+                    }
+                });
                 break;
         }
     }
