@@ -2,7 +2,9 @@
     <string name="app_name">简约记账</string>
     <string name="edit_one">记一笔...</string>
     <string name="month_out">本月支出</string>
+    <string name="out">支出</string>
     <string name="month_in">本月收入</string>
+    <string name="in">收入</string>
     <string name="budget">预算剩余</string>
     <string name="set_budget">设置预算</string>
     <string name="seeExcel">查看表格</string>
@@ -17,7 +19,6 @@
     <string name="setting">设置</string>
     <string name="history_record">账单记录</string>
     <string name="account_info">账单详情</string>
-
     <string name="about_appinfo">应用信息</string>
     <string name="about_version">版本</string>
     <string name="about_1">1.0</string>
@@ -25,9 +26,10 @@
     <string name="about_this">记账</string>
     <string name="about_developer">开发者</string>
     <string name="about_loc">teacherLiu</string>
-
     <string name="history_info">本月账单记录</string>
     <string name="clear_all">清空所有记录</string>
+    <string name="chart_info">账单详情</string>
+    <string name="not_data">暂无数据</string>
 
 
 </resources>
