@@ -27,6 +27,7 @@
     <string name="about_loc">teacherLiu</string>
 
     <string name="history_info">本月账单记录</string>
+    <string name="clear_all">清空所有记录</string>
 
 
 </resources>

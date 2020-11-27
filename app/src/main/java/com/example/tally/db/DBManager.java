@@ -26,7 +26,6 @@ public class DBManager {
      * 读取数据库数据，写入内存
      * kind 表示收入或者支出
      */
-
     public static List<TypeBean> getTypeList(int kind) {
         List<TypeBean> list = new ArrayList<>();
         //读取表中的数据
@@ -202,4 +201,12 @@ public class DBManager {
         }
         return list;
     }
+
+    //删除accounttb中的数据
+    public static void deleteAllAccount() {
+        String sql = "delete from accounttb";
+        db.execSQL(sql);
+    }
+
+
 }

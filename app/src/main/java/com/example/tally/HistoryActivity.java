@@ -1,9 +1,12 @@
 package com.example.tally;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +37,36 @@ public class HistoryActivity extends AppCompatActivity {
         initView();
         initTime();
         loadDate(year, month);
+        setLvClickListener();
+    }
+
+    //设置list view每一个item的长安事件
+    private void setLvClickListener() {
+        historyLv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AccountBean accountBean = mDates.get(position);
+                deleteItem(accountBean);
+                return false;
+            }
+        });
+    }
+
+    private void deleteItem(final AccountBean accountBean) {
+        final int id = accountBean.getId();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示信息").setMessage("确定要删除吗？")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DBManager.deleteItemFromAccounttbById(id);
+                        mDates.remove(accountBean);//实时刷新
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        builder.create().show();
+
     }
 
     //获取指定年份月份收支情况的列表
@@ -66,7 +99,7 @@ public class HistoryActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.history_rili:
-                CalendarDialog dialog = new CalendarDialog(this);
+                final CalendarDialog dialog = new CalendarDialog(this, dialogSelPos, dialogSelMonth);
                 dialog.show();
                 dialog.setDialogSize();
                 dialog.setOnRefreshListener(new CalendarDialog.OnRefreshListener() {
@@ -74,6 +107,8 @@ public class HistoryActivity extends AppCompatActivity {
                     public void onRefresh(int selPos, int year, int month) {
                         timeTv.setText(year + "年" + month + "月");
                         loadDate(year, month);
+                        dialogSelPos = selPos;
+                        dialogSelMonth = month;
                     }
                 });
                 break;
