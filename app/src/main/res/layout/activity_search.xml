@@ -2,65 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_f3f3f3"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:background="@color/grey_f3f3f3">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
-
         <ImageView
             android:id="@+id/search_iv_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
             android:onClick="onClick"
-            android:src="@mipmap/it_back" />
-
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/it_back"/>
         <EditText
             android:id="@+id/search_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/search_iv_back"
+            android:layout_toRightOf="@id/search_iv_back"
             android:background="@drawable/dialog_btn_bg"
-            android:hint="@string/please_search_info"
-            android:paddingStart="20dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
             android:paddingTop="10dp"
-            android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:textSize="16sp">
-
-            <requestFocus />
+            android:paddingLeft="20dp"
+            android:layout_marginLeft="10dp"
+            android:hint="@string/please_search_info">
+            <requestFocus/>
         </EditText>
-
         <ImageView
             android:id="@+id/search_iv_sh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:src="@mipmap/search"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:onClick="onClick"
-            android:src="@mipmap/search" />
+            android:layout_marginRight="20dp"
+            android:onClick="onClick"/>
     </RelativeLayout>
-
     <ListView
-        android:id="@+id/search_Lv"
+        android:id="@+id/search_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/grey_f3f3f3"
         android:dividerHeight="6dp"
-        android:visibility="gone" />
-
+        android:divider="@color/grey_f3f3f3"
+        />
     <TextView
         android:id="@+id/search_tv_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:drawableTop="@mipmap/it_searchtext"
-        android:gravity="center"
         android:text="@string/date_empty"
-        android:textSize="20sp" />
+        android:gravity="center"
+        android:textSize="20sp"
+        android:drawableTop="@mipmap/it_searchtext"
+        android:layout_marginTop="250dp"/>
 
 </LinearLayout>
