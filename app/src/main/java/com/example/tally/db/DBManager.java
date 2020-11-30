@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class DBManager {
         DBOpenHelper helper = new DBOpenHelper(context);//得到帮助类对象
         db = helper.getWritableDatabase();              //得到数据库对象
     }
+
     /*
      * 读取数据库数据，写入内存
      * kind 表示收入或者支出
@@ -147,6 +149,17 @@ public class DBManager {
         return total;
     }
 
+    //统计某月份收支收入情况有多少条，
+    public static int getCountItemOneMonth(int year, int month, int kind) {
+        int total = 0;
+        String sql = "select count(money) from accounttb where year = ? and month = ? and kind = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + "", kind + ""});
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("count(money)"));
+        }
+        return total;
+
+    }
 
     //获取某一年的支出或者收入的总金额 kind  支出0 收入1
     public static float getSumMoneyOneYear(int year, int kind) {
@@ -206,6 +219,33 @@ public class DBManager {
     public static void deleteAllAccount() {
         String sql = "delete from accounttb";
         db.execSQL(sql);
+    }
+
+    //查询某年或月份收入或者支出的每一种类型钱数
+    public static List<ChartItemBean> getChartListFromAccounttb(int year, int month, int kind) {
+        List<ChartItemBean> list = new ArrayList<>();
+        float sumMoneyOneMonth = getSumMoneyOneMonth(year, month, kind);//求出收入支出的总钱数
+        String sql = "select typename,sImageId,sum(money) as total from accounttb where year = ? and month = ? and kind = ? group by typename order by total desc";
+        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + "", kind + ""});
+        while (cursor.moveToNext()) {
+
+            int sImageId = cursor.getInt(cursor.getColumnIndex("sImageId"));
+            String typename = cursor.getString(cursor.getColumnIndex("typename"));
+            float total = cursor.getFloat(cursor.getColumnIndex("total"));
+            //计算百分比
+            float ratio = div(total, sumMoneyOneMonth);
+            ChartItemBean bean = new ChartItemBean(sImageId, typename, ratio, total);
+            list.add(bean);
+        }
+        return list;
+    }
+
+    //保留四位百分比
+    public static float div(float v1, float v2) {
+        float v3 = v1 / v2;
+        BigDecimal bigDecimal = new BigDecimal(v3);
+        float v = bigDecimal.setScale(4, 4).floatValue();
+        return v;
     }
 
 

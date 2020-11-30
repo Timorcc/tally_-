@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 
 import com.example.tally.AboutActivity;
 import com.example.tally.HistoryActivity;
+import com.example.tally.MonthChartActivity;
 import com.example.tally.R;
 import com.example.tally.SettingActivity;
 
@@ -67,7 +68,8 @@ public class MoreDialog extends Dialog implements View.OnClickListener {
                 getContext().startActivity(intent);
                 break;
             case R.id.dialog_more_btn_info:
-
+                intent.setClass(getContext(), MonthChartActivity.class);
+                getContext().startActivity(intent);
                 break;
             case R.id.dialog_more_iv:
 
